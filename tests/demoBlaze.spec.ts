@@ -1,12 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { Pom_Manager } from '../POM/pomManager';
 import { testData } from '../TestData/testdata';
+import { describe } from 'node:test';
 
+test.describe("Verify the order is placed successfully", () => {
+  test.beforeEach(async ({ page }) => {
+    let pomManager = new Pom_Manager(page);
+    page.goto('');
+  });
 test('DemoBlaze_E-Commerce', async ({ page }) => {
 
   let pomManager = new Pom_Manager(page);
-
-  await page.goto(testData.url);
   await pomManager.homePage.loginOption.waitFor({ state: 'visible' });
   await pomManager.homePage.loginOption.click();
   await pomManager.homePage.userName.click();
@@ -36,4 +40,5 @@ test('DemoBlaze_E-Commerce', async ({ page }) => {
   await pomManager.cartPage.purchaseOrder.click();
   await expect(pomManager.cartPage.thank_YouMessage).toBeVisible();
   await pomManager.cartPage.ok_Confirm.click();
+});
 });
