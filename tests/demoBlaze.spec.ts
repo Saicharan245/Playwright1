@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { Pom_Manager } from '../POM/pomManager';
 import { testData } from '../TestData/testdata';
-import { describe } from 'node:test';
 
 test.describe("Verify the order is placed successfully", () => {
   test.beforeEach(async ({ page }) => {
