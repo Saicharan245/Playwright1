@@ -1,6 +1,5 @@
 export const testData = {
 
-    url: 'http://www.demoBlaze.com/',
     userName: 'JustinBieber@12',
     password: 'Justin@12345',
     name: 'Justin Bieber',

@@ -1,43 +1,27 @@
 import { test, expect } from '@playwright/test';
-import { Pom_Manager } from '../POM/pomManager';
-import { testData } from '../TestData/testdata';
+import { HomePage } from '../POM/homePage';
+import { AddTocartPage } from '../POM/addToCartPage';
+import { CartPage } from '../POM/CartPage';
 
 test.describe("Verify the order is placed successfully", () => {
   test.beforeEach(async ({ page }) => {
-    let pomManager = new Pom_Manager(page);
-    page.goto('');
-  });
-test('DemoBlaze_E-Commerce', async ({ page }) => {
+    let homePage = new HomePage(page);
 
-  let pomManager = new Pom_Manager(page);
-  await pomManager.homePage.loginOption.waitFor({ state: 'visible' });
-  await pomManager.homePage.loginOption.click();
-  await pomManager.homePage.userName.click();
-  await pomManager.homePage.userName.fill(testData.userName);
-  await pomManager.homePage.password.click();
-  await pomManager.homePage.password.fill(testData.password);
-  await pomManager.homePage.login.click();
-  await pomManager.homePage.signUp.waitFor({ state: 'hidden' });
-  await pomManager.homePage.phonesCategory.first().click();
-  await pomManager.homePage.firstPhone.first().waitFor({ state: 'visible' });
-  await pomManager.homePage.firstPhone.first().click();
-  page.once('dialog', dialog => {
-    dialog.dismiss().catch(() => { });
+    page.goto('');
+    await homePage.dologin();
+
   });
-  await pomManager.addToCartPage.addToCart.waitFor({ state: 'visible' });
-  await pomManager.addToCartPage.addToCart.click();
-  await pomManager.addToCartPage.cart.click();
-  await pomManager.cartPage.itemsInCart.first().waitFor({ state: 'visible' });
-  await pomManager.cartPage.placeOrder.click();
-  await pomManager.cartPage.name.fill(testData.name);
-  await pomManager.cartPage.country.fill(testData.country);
-  await pomManager.cartPage.city.fill(testData.city);
-  await pomManager.cartPage.creditCard.fill(testData.creditCardNumber);
-  await pomManager.cartPage.month.fill(testData.month);
-  await pomManager.cartPage.year.fill(testData.year);
-  await pomManager.cartPage.purchaseOrder.scrollIntoViewIfNeeded()
-  await pomManager.cartPage.purchaseOrder.click();
-  await expect(pomManager.cartPage.thank_YouMessage).toBeVisible();
-  await pomManager.cartPage.ok_Confirm.click();
+  
+test('Verify that user is able to buy the phone successfuly', async ({ page }) => {
+  let homePage = new HomePage(page);
+  let addToCartPage = new AddTocartPage(page);
+  let cartPage = new CartPage(page);
+
+  await homePage.selectFirstPhone();
+  await addToCartPage.addItemsToCartPage();
+  await cartPage.submitPurchasePhone();
+
+  await expect(cartPage.thank_YouMessage).toBeVisible();
+  await cartPage.ok_Confirm.click();
 });
 });

@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { testData } from '../TestData/testdata';
 
 export class CartPage {
 
@@ -29,5 +30,18 @@ export class CartPage {
         this.purchaseOrder = page.locator('[onclick="purchaseOrder()"]');
         this.thank_YouMessage = page.locator('.sweet-alert h2');
         this.ok_Confirm = page.locator('.confirm');
+    }
+
+    async submitPurchasePhone() {
+        await this.itemsInCart.first().waitFor({ state: 'visible' });
+        await this.placeOrder.click();
+        await this.name.fill(testData.name);
+        await this.country.fill(testData.country);
+        await this.city.fill(testData.city);
+        await this.creditCard.fill(testData.creditCardNumber);
+        await this.month.fill(testData.month);
+        await this.year.fill(testData.year);
+        await this.purchaseOrder.scrollIntoViewIfNeeded()
+        await this.purchaseOrder.click();
     }
 }

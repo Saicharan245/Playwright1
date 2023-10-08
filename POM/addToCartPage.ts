@@ -13,4 +13,10 @@ export class AddTocartPage {
         this.addToCart = page.locator('[onclick="addToCart(1)"]');
         this.cart = page.locator('#cartur');
     }
+
+    async addItemsToCartPage() {
+        await this.addToCart.waitFor({ state: 'visible' });
+        await this.addToCart.click();
+        await this.cart.click();
+    }
 }
